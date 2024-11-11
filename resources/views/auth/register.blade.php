@@ -33,13 +33,6 @@
             <x-input-error :messages="$errors->get('login')" class="mt-2" />
         </div>
 
-        <!-- City -->
-        <div class="mt-4">
-            <x-input-label for="city" :value="__('Город')" />
-            <x-text-input id="city" class="block mt-1 w-full border-2" type="text" name="city" :value="old('city')" placeholder="Gorod" required autocomplete="city" />
-            <x-input-error :messages="$errors->get('city')" class="mt-2" />
-        </div>
-
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Пароль')" />
