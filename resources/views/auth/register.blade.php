@@ -35,14 +35,14 @@
         <!-- City -->
         <div class="mt-4">
             <x-input-label for="city" :value="__('Город')" />
-            <x-text-input id="city" class="block mt-1 w-full border-2 border-sky-400" type="text" name="city" :value="old('city')" placeholder="Gorod" required autocomplete="city" />
+            <x-text-input id="city" class="block mt-1 w-full border-2" type="text" name="city" :value="old('city')" placeholder="Gorod" required autocomplete="city" />
             <x-input-error :messages="$errors->get('city')" class="mt-2" />
         </div>
 
         <!-- Code -->
         <div class="mt-4">
             <x-input-label for="code" :value="__('Код')" />
-            <x-text-input id="code" class="block mt-1 w-full border-2 border-sky-400" type="text" name="code" :value="old('code')" placeholder="Код" required autocomplete="code" />
+            <x-text-input id="code" class="block mt-1 w-full border-2" type="text" name="code" :value="old('code')" placeholder="Код" required autocomplete="code" />
             <x-input-error :messages="$errors->get('code')" class="mt-2" />
         </div>
 
