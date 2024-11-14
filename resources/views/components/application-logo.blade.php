@@ -1,1 +1,1 @@
-<img src="{{asset('images/logo.png')}}" width="300" alt="{{ env('APP_NAME') }}">
+<img src="{{asset('images/newlogo.png')}}" width="300" alt="{{ env('APP_NAME') }}">
