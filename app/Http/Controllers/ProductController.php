@@ -189,33 +189,35 @@ class ProductController extends Controller
 
     public function fileImport(Request $request)
     {
-        // Проверяем, что файл был загружен
+        // Увеличиваем лимит памяти
+        ini_set('memory_limit', '512M');
+
         if ($request->hasFile('file')) {
             // Сохраняем файл во временное хранилище
             $filePath = $request->file('file')->store('temp');
-
-            // Полный путь к файлу
             $fullPath = storage_path('app/' . $filePath);
 
             // Загружаем файл с помощью PhpSpreadsheet
             $spreadsheet = IOFactory::load($fullPath);
 
-            // Очищаем стили и форматирование
+            // Очищаем пустые строки
             foreach ($spreadsheet->getAllSheets() as $sheet) {
-                // Получаем диапазон всех ячеек на листе
-                $highestRow = $sheet->getHighestRow(); // Последняя строка с данными
-                $highestColumn = $sheet->getHighestColumn(); // Последний столбец с данными
-                $cellRange = 'A1:' . $highestColumn . $highestRow; // Диапазон всех ячеек
-                $sheet->getStyle($cellRange)->applyFromArray([
-                    'fill' => [
-                        'fillType' => Fill::FILL_NONE,
-                    ],
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => Border::BORDER_NONE,
-                        ],
-                    ],
-                ]);
+                $highestRow = $sheet->getHighestRow();
+                $highestColumn = $sheet->getHighestColumn();
+
+                // Удаляем пустые строки
+                for ($row = $highestRow; $row >= 1; $row--) {
+                    $isEmpty = true;
+                    for ($col = 'A'; $col <= $highestColumn; $col++) {
+                        if ($sheet->getCell($col . $row)->getValue() !== null) {
+                            $isEmpty = false;
+                            break;
+                        }
+                    }
+                    if ($isEmpty) {
+                        $sheet->removeRow($row);
+                    }
+                }
             }
 
             // Сохраняем очищенный файл
