@@ -202,7 +202,11 @@ class ProductController extends Controller
 
             // Очищаем стили и форматирование
             foreach ($spreadsheet->getAllSheets() as $sheet) {
-                $sheet->getStyle()->applyFromArray([
+                // Получаем диапазон всех ячеек на листе
+                $highestRow = $sheet->getHighestRow(); // Последняя строка с данными
+                $highestColumn = $sheet->getHighestColumn(); // Последний столбец с данными
+                $cellRange = 'A1:' . $highestColumn . $highestRow; // Диапазон всех ячеек
+                $sheet->getStyle($cellRange)->applyFromArray([
                     'fill' => [
                         'fillType' => Fill::FILL_NONE,
                     ],
