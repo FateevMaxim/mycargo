@@ -4,10 +4,11 @@ namespace App\Imports;
 
 use App\Models\TrackList;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class TracksImport implements ToModel, SkipsOnError
+class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows
 {
 
     use Importable;
