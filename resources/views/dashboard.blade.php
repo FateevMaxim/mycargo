@@ -113,7 +113,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 ml-5 mr-5 gap-2">
 
                     @foreach($tracks as $track)
-                        <div class="w-full bg-white border border-indigo-200 rounded-lg shadow">
+                        <div class="w-full bg-white border border-indigo-200 rounded-lg shadow" id="card{{$track->track_code}}">
                             <ul class="grid grid-cols-1 p-3 text-xl font-medium text-white border-b border-gray-200 rounded-t-lg"
                                 @if($track->to_china == null && $track->to_almaty == null && $track->to_client == null && $track->client_accept == null) style="background-color: rgb(168 168 168);" @endif
                                 @if($track->created_at != null && $track->to_china != null && $track->to_almaty == null && $track->to_client == null && $track->client_accept == null ) style="background-color: rgb(255 198 53);" @endif
