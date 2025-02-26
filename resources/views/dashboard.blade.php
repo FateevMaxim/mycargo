@@ -62,6 +62,14 @@
 
                     </div>
                 @endif
+                <div id="toast-success" class="flex z-10 items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" style="width: 95%;" role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <div>
+                        <span class="font-medium">Трек код удалён!</span>
+                    </div>
+                </div>
                 @if(session()->has('message'))
                     <div id="alert-3" class="flex p-4 mb-4 mr-6 ml-6 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
                         <div class="ml-3 text-sm font-medium">
@@ -203,6 +211,24 @@
                         </div>
                     @endforeach
                 </div>
+                <script type="text/javascript">
+                    document.getElementById('toast-success').style.display = 'none';
+
+                    function deleteTrack(element) {
+                        var delete_track = element.getAttribute('data-track');
+
+                        url = 'delete-track';
+                        /* отправляем данные методом POST */
+                        $.post(url, {delete_track: delete_track})
+                            .done(function (data) {
+                                document.getElementById('toast-success').style.display = 'flex'; // показываем сообщение
+                                document.getElementById('card'+data["track_code"]).remove(); // показываем сообщение
+                                setTimeout(function() {
+                                    document.getElementById('toast-success').style.display = 'none'; // скрываем сообщение через 5 секунд
+                                }, 5000); // 5000 миллисекунд = 5 секунд
+                            });
+                    }
+                </script>
             </div>
         </div>
 
