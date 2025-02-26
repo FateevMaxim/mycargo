@@ -7,8 +7,9 @@ use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows
+class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows, WithChunkReading
 {
 
     use Importable;
@@ -46,5 +47,10 @@ class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows
                 ]
             );
         }
+    }
+
+    public function chunkSize(): int
+    {
+        return 100;
     }
 }
