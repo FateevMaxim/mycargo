@@ -8,8 +8,9 @@ use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithLimit;
 
-class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows, WithChunkReading
+class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows, WithChunkReading, WithLimit
 {
 
     use Importable;
@@ -51,6 +52,11 @@ class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows, WithChunkRe
 
     public function chunkSize(): int
     {
-        return 100;
+        return 50;
+    }
+
+    public function limit(): int
+    {
+        return 50; // Ограничиваем обработку 100 строками
     }
 }
