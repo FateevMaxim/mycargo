@@ -31,7 +31,7 @@ class TracksImport implements ToModel, SkipsOnError
     */
     public function model(array $row)
     {
-        if ($row[0] !== null) {
+        if ($row[1] !== null) {
             return TrackList::updateOrCreate(
                 [
                     'track_code' => $row[1],
