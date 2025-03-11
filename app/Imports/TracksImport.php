@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithLimit;
 
-class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows, WithChunkReading, WithLimit
+class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows, WithChunkReading
 {
 
     use Importable;
@@ -34,7 +34,8 @@ class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows, WithChunkRe
     */
     public function model(array $row)
     {
-        if ($row[1] !== null) {
+        \Log::info('Processing row: ', $row);
+        if (trim($row[1]) !== '') {
             return TrackList::updateOrCreate(
                 [
                     'track_code' => $row[1],
@@ -55,8 +56,4 @@ class TracksImport implements ToModel, SkipsOnError, SkipsEmptyRows, WithChunkRe
         return 50;
     }
 
-    public function limit(): int
-    {
-        return 50; // Ограничиваем обработку 100 строками
-    }
 }

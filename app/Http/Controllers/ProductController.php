@@ -205,14 +205,15 @@ class ProductController extends Controller
 
             // Очищаем пустые строки
             foreach ($spreadsheet->getAllSheets() as $sheet) {
-                $highestRow = $sheet->getHighestRow();
-                //$highestColumn = $sheet->getHighestColumn();
+                logger()->info("Total rows: " . $sheet->getHighestRow());
+                $highestRow = $sheet->getHighestDataRow();
+                $highestColumn = $sheet->getHighestDataColumn();
 
                 // Удаляем пустые строки
                 for ($row = $highestRow; $row >= 1; $row--) {
                     $isEmpty = true;
-                    for ($col = 'A'; $col <= 'B'; $col++) {
-                        if ($sheet->getCell($col . $row)->getValue() !== null) {
+                    for ($col = 'A'; $col <= $highestColumn; $col++) {
+                        if (trim((string) $sheet->getCell($col . $row)->getValue()) !== '') {
                             $isEmpty = false;
                             break;
                         }
