@@ -206,17 +206,22 @@ class ProductController extends Controller
             // Очищаем пустые строки
             foreach ($spreadsheet->getAllSheets() as $sheet) {
                 $highestRow = $sheet->getHighestRow();
+                //$highestColumn = $sheet->getHighestColumn();
 
                 // Удаляем пустые строки
                 for ($row = $highestRow; $row >= 1; $row--) {
-                    // Проверяем только столбец 'B'
-                    $cellValue = $sheet->getCell('B' . $row)->getValue();
-                    if ($cellValue === null || $cellValue === '') {
+                    $isEmpty = true;
+                    for ($col = 'A'; $col <= 'B'; $col++) {
+                        if ($sheet->getCell($col . $row)->getValue() !== null) {
+                            $isEmpty = false;
+                            break;
+                        }
+                    }
+                    if ($isEmpty) {
                         $sheet->removeRow($row);
                     }
                 }
             }
-
 
             // Сохраняем очищенный файл
             $cleanedFilePath = storage_path('app/temp/cleaned_' . $request->file('file')->getClientOriginalName());
